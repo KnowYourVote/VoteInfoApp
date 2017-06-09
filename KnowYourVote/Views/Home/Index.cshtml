@@ -1,31 +1,31 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+@*<script src="~/Scripts/jquery-3.1.1.js"></script>*@
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<div class="weathar">
+    <div id="name0"></div>
+    <div id="name1"></div>
+    <button id="logButton">Click for log</button>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+<script>
+    $(document).ready(function () {
+        $("#logButton").click(function () {
+            //$.get("http://api.openweathermap.org/data/2.5/weather?q=London&appid=cebabc19405e8150a81239252ca19438", function (response) {
+            //    console.log(response);
+            //    $("#name").text(response.name);
+            //    $("#temp").text(response.main.temp);
+            //    $("#humidity").text(response.main.humidity);
+            //});
+
+            //The word after the v2 is the method, then after the api key, there's the address
+            $.get("https://www.googleapis.com/civicinfo/v2/representatives?key=AIzaSyBRTWesCWcZoIiBVFxanm3BPBkUmOdSbW8&address=8290%20Timber%20Trail%20Chagrin%20Falls%20OH", function (response) {
+                console.log(response);
+                $("#name0").text(response.offices[0].name + ": " + response.officials[0].name);
+                $("#name1").text(response.offices[1].name + ": " + response.officials[1].name);
+                //$("#date").text(response.elections[2].electionDay);
+            });
+        });
+    });
+</script>
