@@ -3,29 +3,126 @@
 }
 @*<script src="~/Scripts/jquery-3.1.1.js"></script>*@
 
-<div class="weathar">
-    <div id="name0"></div>
-    <div id="name1"></div>
-    <button id="logButton">Click for log</button>
-</div>
+@*AIzaSyDOkccOGtXnDcCfl26Z7B64y8qHRubmhwQ*@
+
+<style>
+    #description {
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+    }
+
+    #infowindow-content .title {
+        font-weight: bold;
+    }
+
+    #infowindow-content { display: none; }
+
+    #map #infowindow-content { display: inline; }
+
+    .pac-card {
+        margin: 10px 10px 0 0;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        background-color: #fff;
+        font-family: Roboto;
+    }
+
+    #pac-container {
+        padding-bottom: 12px;
+        margin-right: 12px;
+    }
+
+    .pac-controls {
+        display: inline-block;
+        padding: 5px 11px;
+    }
+
+    .pac-controls label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+    }
+
+    #pac-input {
+        background-color: #fff;
+        font-size: 15px;
+        font-weight: 300;
+        text-overflow: ellipsis;
+        width: 300px;
+    }
+
+    #pac-input:focus { border-color: #4d90fe; }
+</style>
+
+<input id="pac-input" class="controls" type="text" placeholder="Enter Your Address Here">
+<button id="search">See Results</button>
+
+<div id="name0"></div>
+<div id="name1"></div>
+<div id="name2"></div>
+<div id="name3"></div>
+<div id="name4"></div>
+<div id="name5"></div>
 
 <script>
-    $(document).ready(function () {
-        $("#logButton").click(function () {
-            //$.get("http://api.openweathermap.org/data/2.5/weather?q=London&appid=cebabc19405e8150a81239252ca19438", function (response) {
-            //    console.log(response);
-            //    $("#name").text(response.name);
-            //    $("#temp").text(response.main.temp);
-            //    $("#humidity").text(response.main.humidity);
-            //});
+    var loc;
+    function initAutocomplete() {
+        // Create the search box and link it to the UI element.
+        var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
 
-            //The word after the v2 is the method, then after the api key, there's the address
-            $.get("https://www.googleapis.com/civicinfo/v2/representatives?key=AIzaSyBRTWesCWcZoIiBVFxanm3BPBkUmOdSbW8&address=8290%20Timber%20Trail%20Chagrin%20Falls%20OH", function (response) {
+        searchBox.addListener('places_changed', function () {
+            var places = searchBox.getPlaces();
+
+            if (places.length == 0) { return; }
+
+            // For each place, get the icon, name and location.
+            places.forEach(function (place) {
+                if (!place.geometry) {
+                    console.log("Returned place contains no geometry");
+                    return;
+                }
+            });
+            loc = places[0].formatted_address;
+            loc = loc.replace(/,/g, '');
+            loc = encodeURI(loc);
+        });
+    }
+
+    $(document).ready(function () {
+        $("#pac-input").keypress(function (e) {
+            if (e.which == 13) {
+                searchResult();
+                return false;
+            }
+        });
+
+        $("#search").click(function () {
+            searchResult();
+        });
+
+        function searchResult() {
+            var locLink = "https://www.googleapis.com/civicinfo/v2/representatives?key=AIzaSyBRTWesCWcZoIiBVFxanm3BPBkUmOdSbW8&address=" + loc;
+            $.get(locLink, function (response) {
                 console.log(response);
                 $("#name0").text(response.offices[0].name + ": " + response.officials[0].name);
                 $("#name1").text(response.offices[1].name + ": " + response.officials[1].name);
-                //$("#date").text(response.elections[2].electionDay);
+                $("#name2").text(response.offices[2].name + ": " + response.officials[2].name);
+                $("#name3").text(response.offices[2].name + ": " + response.officials[3].name);
+                $("#name4").text(response.offices[3].name + ": " + response.officials[4].name);
+                $("#name5").text(response.offices[4].name + ": " + response.officials[5].name);
             });
-        });
+
+            $.get("https://www.googleapis.com/civicinfo/v2/elections?key=AIzaSyBRTWesCWcZoIiBVFxanm3BPBkUmOdSbW8", function (response) {
+                console.log(response);
+            });
+        }
+
     });
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOkccOGtXnDcCfl26Z7B64y8qHRubmhwQ&libraries=places&callback=initAutocomplete"
+        async defer></script>
