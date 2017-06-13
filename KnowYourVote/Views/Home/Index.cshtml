@@ -6,141 +6,19 @@
 @*AIzaSyDOkccOGtXnDcCfl26Z7B64y8qHRubmhwQ*@
 
 <style>
-    #description {
-        font-size: 15px;
-        font-weight: 300;
-    }
-
-    .pac-card {
-        margin: 10px 10px 0 0;
-        border-radius: 2px 0 0 2px;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        outline: none;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-        background-color: #fff;
-        font-family: Roboto;
-    }
-
-    #pac-container {
-        padding-bottom: 12px;
-        margin-right: 12px;
-    }
-
-    .pac-controls {
-        display: inline-block;
-        padding: 5px 11px;
-    }
-
-    .pac-controls label {
-        font-family: Roboto;
-        font-size: 13px;
-        font-weight: 300;
-    }
-
-    #pac-input {
-        background-color: #fff;
-        font-size: 15px;
-        font-weight: 300;
-        text-overflow: ellipsis;
-        width: 300px;
-    }
-
-    #pac-input:focus { border-color: #4d90fe; }
+    
 </style>
+
+@* The input is the search bar, the button activates the search
+   The official container holds the officials when the search is entered
+   The election container is the same except for elections *@
 
 <input id="pac-input" class="controls" type="text" placeholder="Enter Your Address Here">
 <button id="search">See Results</button>
-
 <div id="official-container"></div>
 <div id="election-container"></div>
 
-<script>
-    var loc;
-    var state;
-    function initAutocomplete() {
-        // Create the search box and link it to the UI element.
-        var input = document.getElementById('pac-input');
-        var searchBox = new google.maps.places.SearchBox(input);
-
-        searchBox.addListener('places_changed', function () {
-            var places = searchBox.getPlaces();
-
-            if (places.length == 0) { return; }
-
-            // For each place, get the icon, name and location.
-            places.forEach(function (place) {
-                if (!place.geometry) {
-                    console.log("Returned place contains no geometry");
-                    return;
-                }
-            });
-            loc = encodeURI(places[0].formatted_address.replace(/,/g, ''));
-
-            if (/.. (\d){5}, USA/.test(places[0].formatted_address))
-            {
-                state = /.. (\d){5}/.exec(places[0].formatted_address)[0].substr(0, 2).toLowerCase();
-            }
-            if (/.., USA/.test(places[0].formatted_address)) {
-                state = /.., USA/.exec(places[0].formatted_address)[0].substr(0, 2).toLowerCase();
-            }
-        });
-    }
-
-    $(document).ready(function () {
-        $("#pac-input").keypress(function (e) {
-            if (e.which == 13) {
-                searchResult();
-                return false;
-            }
-        });
-
-        $("#search").click(function () {
-            searchResult();
-        });
-
-        function searchResult() {
-            var locLink = "https://www.googleapis.com/civicinfo/v2/representatives?key=AIzaSyBRTWesCWcZoIiBVFxanm3BPBkUmOdSbW8&address=" + loc;
-            $.get(locLink, function (response) {
-                console.log(response);
-                document.getElementById('official-container').innerHTML = '';
-                var id = 0;
-                for (var x = 0; x < response.offices.length; x++) {
-                    for (var y = 0; y < response.offices[x].officialIndices.length; y++) {
-                        document.getElementById('official-container').innerHTML +=
-                        '<div class="cell">' + response.officials[id].name +
-                        '<br/>Position: ' + response.offices[x].name +
-                        '<br/>Party: ' + response.officials[id].party +
-                        '<br/><a href="' + response.officials[id].urls + '" target="blank_">Website</a></div><br/>';
-                        id++;
-                    }
-                }
-            });
-            $.get("https://www.googleapis.com/civicinfo/v2/elections?key=AIzaSyBRTWesCWcZoIiBVFxanm3BPBkUmOdSbW8", function (response) {
-                //console.log(response);
-                var stateRegex = new RegExp("state:" + state);
-                document.getElementById('election-container').innerHTML = '';
-                response.elections.forEach(function (entry) {
-                    if (!/state:/.test(entry.ocdDivisionId) || stateRegex.test(entry.ocdDivisionId))
-                    {
-                        //console.log(entry);
-                        document.getElementById('election-container').innerHTML +=
-                        '<div class="cell">' + entry.name + ' at ' + entry.electionDay + '</div>';
-                    }
-                });
-            });
-        }
-
-        //Next on my to-do list
-        function populateOfficials() {
-
-        }
-
-        function populateElections() {
-
-        }
-
-    });
-</script>
+@* You'll need these scripts on the bottom to run the search bar*@
+<script src="~/Scripts/search.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOkccOGtXnDcCfl26Z7B64y8qHRubmhwQ&libraries=places&callback=initAutocomplete"
         async defer></script>
