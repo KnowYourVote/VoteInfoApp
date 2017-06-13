@@ -12,21 +12,16 @@ namespace KnowYourVote.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Politician
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public Politician()
         {
             this.Comments = new HashSet<Comment>();
         }
     
-        public int UserID { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string StreetAddress { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public int ZipCode { get; set; }
+        public int PoliticianID { get; set; }
+        public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }

@@ -221,13 +221,36 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PoliticiansController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Comment.cs">
+      <DependentUpon>Comments.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Comments.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Comments.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Comments.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Comments.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Comments.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Comments.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Favorite.cs">
+      <DependentUpon>Comments.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\KYVModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -245,8 +268,14 @@
       <DependentUpon>KYVModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Politician.cs">
+      <DependentUpon>Comments.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>Comments.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User.cs">
-      <DependentUpon>KYVModel.tt</DependentUpon>
+      <DependentUpon>Comments.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -260,6 +289,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\Comments.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Comments.edmx</DependentUpon>
+      <LastGenOutput>Comments.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Comments.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Comments.edmx</DependentUpon>
+      <LastGenOutput>Comments.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\KYVModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>KYVModel.edmx</DependentUpon>
@@ -290,6 +329,13 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <EntityDeploy Include="Models\Comments.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Comments.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Comments.edmx.diagram">
+      <DependentUpon>Comments.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -351,6 +397,16 @@
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Views\Comments\Create.cshtml" />
+    <Content Include="Views\Comments\Delete.cshtml" />
+    <Content Include="Views\Comments\Details.cshtml" />
+    <Content Include="Views\Comments\Edit.cshtml" />
+    <Content Include="Views\Comments\Index.cshtml" />
+    <Content Include="Views\Politicians\Create.cshtml" />
+    <Content Include="Views\Politicians\Delete.cshtml" />
+    <Content Include="Views\Politicians\Details.cshtml" />
+    <Content Include="Views\Politicians\Edit.cshtml" />
+    <Content Include="Views\Politicians\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -13,10 +13,10 @@ namespace KnowYourVote.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class KnowYourVoteEntities : DbContext
+    public partial class KnowYourVoteEntities1 : DbContext
     {
-        public KnowYourVoteEntities()
-            : base("name=KnowYourVoteEntities")
+        public KnowYourVoteEntities1()
+            : base("name=KnowYourVoteEntities1")
         {
         }
     
@@ -25,10 +25,10 @@ namespace KnowYourVote.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<Favorite> Favorites { get; set; }
+        public virtual DbSet<Politician> Politicians { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
-
-        public System.Data.Entity.DbSet<KnowYourVote.Models.Comment> Comments { get; set; }
-
-        public System.Data.Entity.DbSet<KnowYourVote.Models.Politician> Politicians { get; set; }
     }
 }
